@@ -3,7 +3,7 @@ import sys
 class Board:
     def __init__(self):
         self.players = []
-        self.pieces =[[0 for x in range(5)] for y in range(5)]
+        self.pieces =[[0 for x in range(6)] for y in range(7)]
 
     def add_player(self, player, color):
         self.players.append(Player(player, color))
@@ -12,12 +12,17 @@ class Board:
         for x in range(5):
             print(self.pieces[x])
 
+    def next_turn(self, turn):
+        self.players[turn].make_move()
+        self.print_board()
+
+
 class Menu:
     def __init__(self):
-        self.Board = None
+        self.board = None
         self.choices = {
             "1": self.start_game,
-            "2": quit,
+            "2": self.quit,
         }
 
     def create_board(self):
@@ -46,11 +51,13 @@ Connect4
         self.create_board()
         self.create_players()
 
-        for i in range(2):
-            self.board.players[i].make_move()
+        turn = False
+        game_over = False
+        while not game_over:
+            self.board.next_turn(turn)
+            turn = not turn
 
         self.quit()
-
 
     def run(self):
         while True:
@@ -76,7 +83,10 @@ class Player:
         self.color = color
 
     def make_move(self):
-        print(self.name, "made a move")
+        column = int(input("Player select a column (1 to 7): "))
+        while column > 7 or column < 1:
+            print("Invalid choice\n")
+            column = int(input("Player select a column (1 to 7): "))
 
 if __name__ == "__main__":
     menu = Menu()
