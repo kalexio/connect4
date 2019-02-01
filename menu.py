@@ -35,11 +35,13 @@ Connect4
         self.create_board()
         self.create_players()
 
-        turn = False
+        turn = 0
         game_over = False
         while not game_over:
+            if turn == 2:
+                turn = 0
             self.board.next_turn(turn)
-            turn = not turn
+            turn += 1
 
         self.quit()
 

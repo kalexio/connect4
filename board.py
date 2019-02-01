@@ -1,18 +1,34 @@
 class Board:
     def __init__(self):
         self.players = []
-        self.pieces =[[0 for x in range(6)] for y in range(7)]
+        self.pieces =[[0 for x in range(7)] for y in range(6)]
 
     def add_player(self, player, color):
         self.players.append(Player(player, color))
 
     def print_board(self):
-        for x in range(5):
+        for x in range(6):
             print(self.pieces[x])
 
     def next_turn(self, turn):
-        self.players[turn].make_move()
+        column = self.players[turn].make_move()
+        self.add_piece(column, turn)
         self.print_board()
+
+    def add_piece(self, column, turn):
+        for row in range(5,-1,-1):
+            if self.pieces[row][column - 1] != 0:
+                continue
+            else:
+                self.pieces[row][column - 1] = turn + 1
+                break
+
+    def check_move(self, column):
+        if self.pieces[0][column - 1]:
+            print("Not a valid move\n")
+
+    def check_winner(self):
+        pass
 
 class Piece:
     def __init__(self):
@@ -29,3 +45,4 @@ class Player:
             print("Invalid choice\n")
             column = int(input("Player select a column (1 to 7): "))
 
+        return column
