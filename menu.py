@@ -40,7 +40,9 @@ Connect4
         while not game_over:
             if turn == 2:
                 turn = 0
-            self.board.next_turn(turn)
+            if self.board.next_turn(turn):
+                game_over = True
+
             turn += 1
 
         self.quit()
