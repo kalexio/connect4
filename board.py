@@ -12,8 +12,8 @@ class Board:
 
     def next_turn(self, turn):
         column = self.players[turn].make_move()
+        self.check_move(column, turn)
         self.add_piece(column, turn)
-        self.print_board()
 
     def add_piece(self, column, turn):
         for row in range(5,-1,-1):
@@ -21,11 +21,13 @@ class Board:
                 continue
             else:
                 self.pieces[row][column - 1] = turn + 1
+                self.print_board()
                 break
 
-    def check_move(self, column):
-        if self.pieces[0][column - 1]:
-            print("Not a valid move\n")
+    def check_move(self, column, turn):
+        if self.pieces[0][column - 1] !=0:
+            print("\nNot a valid move!")
+            self.next_turn(turn)
 
     def check_winner(self):
         pass
