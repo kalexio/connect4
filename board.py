@@ -42,9 +42,10 @@ class Player:
         self.color = color
 
     def make_move(self):
-        column = int(input("Player select a column (1 to 7): "))
-        while column > 7 or column < 1:
-            print("Invalid choice\n")
+        while True:
             column = int(input("Player select a column (1 to 7): "))
+            if column > 7 or column < 1:
+                print("Invalid choice\n")
+            else:
+                return column
 
-        return column
