@@ -1,9 +1,10 @@
+import sys
 import random
 
 class Board:
     def __init__(self):
         self.players = []
-        self.pieces =[[0 for x in range(7)] for y in range(6)]
+        self.pieces = [[0 for x in range(7)] for y in range(6)]
 
     def add_player(self, player):
         self.players.append(Player(player))
@@ -29,12 +30,12 @@ class Board:
     def next_turn(self, turn):
         choice = False
         while not choice:
-            column = self.players[turn].make_move()
+            column = self.players[turn].make_move(self.players[turn].name)
             choice = self.check_move(column, turn)
 
         row = self.add_piece(column, turn)
         if self.check_winner(row, column, turn + 1):
-            print("Congratulations {0}! You won the game".format(self.players[turn].name))
+            print("\nCongratulations {0}! You won the game".format(self.players[turn].name))
             return True
 
     def add_piece(self, column, turn):
@@ -47,7 +48,7 @@ class Board:
                 return row
 
     def check_move(self, column, turn):
-        if self.pieces[0][column - 1] !=0:
+        if self.pieces[0][column - 1] != 0:
             print("\nNot a valid move! Please select again")
             return False
 
@@ -89,11 +90,14 @@ class Player:
         self.name = name
         self.color = None
 
-    def make_move(self):
+    def make_move(self, name):
         while True:
-            column = int(input("Player select a column (1 to 7): "))
-            if column > 7 or column < 1:
-                print("Invalid choice\n")
-            else:
-                return column
+            try:
+                column = int(input("\n" + name + " select a column (1 to 7): "))
+                if column > 7 or column < 1:
+                    print("Invalid choice")
+                else:
+                    return column
+            except ValueError:
+                print("Please enter the number of the column!")
 
