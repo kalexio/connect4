@@ -27,10 +27,13 @@ class Board:
             print(self.pieces[x])
 
     def next_turn(self, turn):
-        column = self.players[turn].make_move()
-        self.check_move(column, turn)
+        choice = False
+        while not choice:
+            column = self.players[turn].make_move()
+            choice = self.check_move(column, turn)
+
         row = self.add_piece(column, turn)
-        if self.check_winner(row, turn + 1):
+        if self.check_winner(row, column, turn + 1):
             print("Congratulations {0}! You won the game".format(self.players[turn].name))
             return True
 
@@ -45,13 +48,15 @@ class Board:
 
     def check_move(self, column, turn):
         if self.pieces[0][column - 1] !=0:
-            print("\nNot a valid move!")
-            self.next_turn(turn)
+            print("\nNot a valid move! Please select again")
+            return False
 
-    def check_winner(self, row, turn):
+        return True
+
+    def check_winner(self, row, col, turn):
         if self.horizontal_check(row, turn):
             return True
-        if self.vertical_check():
+        if self.vertical_check(col, turn):
             return True
         if self.diagonal_check():
             return True
@@ -65,7 +70,11 @@ class Board:
 
         return False
 
-    def vertical_check(self):
+    def vertical_check(self, col, turn):
+        for row in range(5,2,-1):
+            if self.pieces[row][col-1] == turn and self.pieces[row-1][col-1] == turn and self.pieces[row-2][col-1] == turn and self.pieces[row-3][col-1] == turn:
+                return True
+
         return False
 
     def diagonal_check(self):
