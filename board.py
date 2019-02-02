@@ -1,10 +1,26 @@
+import random
+
 class Board:
     def __init__(self):
         self.players = []
         self.pieces =[[0 for x in range(7)] for y in range(6)]
 
-    def add_player(self, player, color):
-        self.players.append(Player(player, color))
+    def add_player(self, player):
+        self.players.append(Player(player))
+
+    def select_color(self):
+        colors = ["R", "Y"]
+        random_player = random.choice([self.players[0].name, self.players[1].name])
+        selected_color = input("\n" + random_player + " select your color between RED and YELLOW (R/Y): ")
+        if selected_color in colors:
+            j = colors.index(selected_color)
+            for i in range(2):
+                if self.players[i].name == random_player:
+                    self.players[i].color = selected_color
+                    self.players[1 - i].color = colors[1 - j]
+        else:
+            print("Please enter R or Y!")
+            self.select_color()
 
     def print_board(self):
         for x in range(6):
@@ -60,9 +76,9 @@ class Piece:
         pass
 
 class Player:
-    def __init__(self, name, color):
+    def __init__(self, name):
         self.name = name
-        self.color = color
+        self.color = None
 
     def make_move(self):
         while True:

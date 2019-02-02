@@ -18,8 +18,10 @@ class Menu:
 
     def create_player(self):
         player = input("Enter player's name: ")
-        color = input("Enter player's color: ")
-        self.board.add_player(player, color)
+        self.board.add_player(player)
+
+    def select_colors(self):
+        self.board.select_color()
 
     def display_menu(self):
         print(
@@ -34,6 +36,7 @@ Connect4
     def start_game(self):
         self.create_board()
         self.create_players()
+        self.select_colors()
 
         turn = 0
         game_over = False
