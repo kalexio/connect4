@@ -6,8 +6,9 @@ class Board:
         self.players = []
         self.pieces = [[0 for x in range(7)] for y in range(6)]
 
-    def add_player(self, player):
-        self.players.append(Player(player))
+    def add_player(self):
+        name = input("Enter player's name: ")
+        self.players.append(Player(name))
 
     def select_color(self):
         colors = ["R", "Y"]
@@ -85,7 +86,7 @@ class Board:
                     return True
 
         for c in range(4):
-            for r in range(2,-1-1):
+            for r in range(0,3):
                 if self.pieces[r][c] == turn and self.pieces[r+1][c+1] == turn and self.pieces[r+2][c+2] == turn and self.pieces[r+3][c+3] == turn:
                     return True
 
@@ -93,7 +94,7 @@ class Board:
 
 class Piece:
     def __init__(self):
-        pass
+        self.color = None
 
 class Player:
     def __init__(self, name):

@@ -17,8 +17,7 @@ class Menu:
         self.create_player()
 
     def create_player(self):
-        player = input("Enter player's name: ")
-        self.board.add_player(player)
+        self.board.add_player()
 
     def select_colors(self):
         self.board.select_color()
