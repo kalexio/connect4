@@ -59,7 +59,7 @@ class Board:
             return True
         if self.vertical_check(col, turn):
             return True
-        if self.diagonal_check():
+        if self.diagonal_check(turn):
             return True
 
         return False
@@ -78,7 +78,17 @@ class Board:
 
         return False
 
-    def diagonal_check(self):
+    def diagonal_check(self, turn):
+        for c in range(4):
+            for r in range(5,2,-1):
+                if self.pieces[r][c] == turn and self.pieces[r-1][c+1] == turn and self.pieces[r-2][c+2] == turn and self.pieces[r-3][c+3] == turn:
+                    return True
+
+        for c in range(4):
+            for r in range(2,-1-1):
+                if self.pieces[r][c] == turn and self.pieces[r+1][c+1] == turn and self.pieces[r+2][c+2] == turn and self.pieces[r+3][c+3] == turn:
+                    return True
+
         return False
 
 class Piece:
